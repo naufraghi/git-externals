@@ -235,7 +235,7 @@ def gitext_add(external, src, dst, branch, tag, ref):
 @click.argument('externals', nargs=-1, metavar='NAME')
 def gitext_freeze(externals):
     """Freeze the externals revision"""
-    from git_externals import load_gitexts, dump_gitexts, foreach_externals_dir
+    from git_externals import load_gitexts, dump_gitexts, foreach_externals_dir, root_path
     git_externals = load_gitexts()
     re_from_git_svn_id = re.compile("git-svn-id:.*@(\d+)")
 
