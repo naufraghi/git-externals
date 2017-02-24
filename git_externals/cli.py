@@ -2,16 +2,19 @@
 
 from __future__ import print_function, unicode_literals
 
+import os
+import sys
+import re
+
+import click
+
 if __package__ is None:
     from __init__ import __version__
     from utils import command, CommandError, chdir, git, ProgError
 else:
     from . import __version__
-    from .utils import command, CommandError, chdir, git, ProgError, decode_utf8
-
-import click
-import os
-import sys
+    from .utils import (command, CommandError, chdir, git, ProgError, decode_utf8,
+                        current_branch)
 
 click.disable_unicode_literals_warning = True
 
@@ -176,11 +179,7 @@ def gitext_ls():
 @click.argument('dst', metavar='PATH')
 @click.option('--branch', '-b', default=None, help='Checkout the given branch')
 @click.option('--tag', '-t', default=None, help='Checkout the given tag')
-@click.option(
-    '--ref',
-    '-r',
-    default=None,
-    help='Checkout the given commit sha, it requires that a branch is given')
+@click.option('--ref', '-r', default=None, help='Checkout the given commit sha')
 def gitext_add(external, src, dst, branch, tag, ref):
     """Add a git external to the current repo.
 
@@ -228,6 +227,39 @@ def gitext_add(external, src, dst, branch, tag, ref):
 
         if dst not in git_externals[external]['targets'].setdefault(src, []):
             git_externals[external]['targets'][src].append(dst)
+
+    dump_gitexts(git_externals)
+
+
+@cli.command('freeze')
+@click.argument('externals', nargs=-1, metavar='NAME')
+def gitext_freeze(externals):
+    """Freeze the externals revision"""
+    from git_externals import load_gitexts, dump_gitexts, foreach_externals_dir, root_path
+    git_externals = load_gitexts()
+    re_from_git_svn_id = re.compile("git-svn-id:.*@(\d+)")
+
+    def get_version(rel_url, ext_path, refs):
+        if 'tag' in refs:
+            return
+
+        revision = command('svnversion', '-c')
+        if "Unversioned" in revision:
+            revision = None
+
+        if revision is None:
+            message = git("log", "--grep", "git-svn-id:", "-1")
+            match = re_from_git_svn_id.search(message)
+            if match:
+                revision = match.group(1)
+            else:
+                branch_name = current_branch()
+                remote_name = git("config", "branch.%s.remote" % branch_name)
+                revision = git("log", "%s/%s" % (remote_name, branch_name), "-1", "--format=%H")
+
+            git_externals[rel_url]["ref"] = revision
+
+    foreach_externals_dir(root_path(), get_version, only=externals)
 
     dump_gitexts(git_externals)
 
