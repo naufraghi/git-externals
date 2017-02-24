@@ -150,7 +150,7 @@ def foreach_externals(pwd, callback, recursive=True, only=()):
             foreach_externals(ext_path, callback, recursive=recursive, only=only)
 
 
-def foreach_externals_dir(pwd, callback, recursive=True, only=[]):
+def foreach_externals_dir(pwd, callback, recursive=True, only=()):
     """
     Same as foreach_externals, but place the callback in the directory
     context of the externals before calling it
@@ -159,7 +159,7 @@ def foreach_externals_dir(pwd, callback, recursive=True, only=[]):
         if os.path.exists(ext_path):
             with chdir(ext_path):
                 callback(rel_url, ext_path, refs)
-    foreach_externals(root_path(), run_from_dir, recursive=recursive, only=only)
+    foreach_externals(pwd, run_from_dir, recursive=recursive, only=only)
 
 
 def sparse_checkout(repo_name, repo, dirs):
