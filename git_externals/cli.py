@@ -251,12 +251,12 @@ def gitext_freeze(externals):
             message = git("log", "--grep", "git-svn-id:", "-1")
             match = re_from_git_svn_id.search(message)
             if match:
-                revision = match.group(1)
+                revision = "svn:r" + match.group(1)
             else:
                 branch_name = current_branch()
                 remote_name = git("config", "branch.%s.remote" % branch_name)
                 revision = git("log", "%s/%s" % (remote_name, branch_name), "-1", "--format=%H")
-
+            info("Freeze {0} at {1}".format(rel_url, revision))
             git_externals[rel_url]["ref"] = revision
 
     foreach_externals_dir(root_path(), get_version, only=externals)
