@@ -71,7 +71,7 @@ def cli(ctx, with_color):
             gitext_st(())
 
 
-@cli.command('foreach', context_settings=dict(ignore_unknown_options=True))
+@cli.command('foreach')
 @click.option('--recursive/--no-recursive', help='If --recursive is specified, this command will recurse into nested externals', default=True)
 @click.argument('subcommand', nargs=-1, required=True)
 def gitext_foreach(recursive, subcommand):
@@ -235,7 +235,7 @@ def gitext_add(external, src, dst, branch, tag, ref):
 @click.argument('externals', nargs=-1, metavar='NAME')
 def gitext_freeze(externals):
     """Freeze the externals revision"""
-    from git_externals import load_gitexts, dump_gitexts, foreach_externals_dir
+    from git_externals import load_gitexts, dump_gitexts, foreach_externals_dir, root_path
     git_externals = load_gitexts()
     re_from_git_svn_id = re.compile("git-svn-id:.*@(\d+)")
 
