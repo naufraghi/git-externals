@@ -339,7 +339,7 @@ def gitext_up(recursive, entries=None, reset=False, use_gitsvn=False):
         gitsvnrebase('.', capture=False)
         rev = get_rev(ext_repo) or 'git-svn'
         echo('Checking out commit', rev)
-        egit('checkout', rev)
+        git('checkout', rev)
 
     def svn_initial_checkout(repo_name, repo_url):
         """Perform the initial svn checkout"""
