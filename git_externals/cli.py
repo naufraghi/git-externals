@@ -194,7 +194,7 @@ def gitext_add(external, src, dst, branch, tag, ref, vcs):
 
     It requires one of --branch or --tag.
     """
-    from git_externals import load_gitexts, dump_gitexts, normalize_gitexts
+    from git_externals import load_gitexts, dump_gitexts, normalize_gitexts, print_gitext_info
 
     git_externals = load_gitexts()
 
@@ -234,6 +234,7 @@ def gitext_add(external, src, dst, branch, tag, ref, vcs):
         if dst not in git_externals[external]['targets'].setdefault(src, []):
             git_externals[external]['targets'][src].append(dst)
 
+    print_gitext_info(external, git_externals[external], root_dir='.')
     dump_gitexts(git_externals)
 
 
