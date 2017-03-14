@@ -12,10 +12,10 @@ Svn external (with --vcs):
   externals sanity check passed!
   External trunk
   Cloning external trunk
-  Initialized empty Git repository in /tmp/cramtests-*/svn-target.t/.git/externals/trunk/.git/ (glob)
-  \tA\tbigfile.bin (esc)
-  \tA\tdocs/docs.md (esc)
-  \tA\tREADME.md (esc)
+  Initialized empty Git repository in /tmp/cramtests-*/svn-target.t/.git*externals/trunk/.git/ (glob)
+  \tA\t*.* (esc) (glob)
+  \tA\t*.* (esc) (glob)
+  \tA\t*.* (esc) (glob)
   Checking svn:mergeinfo changes since r15: 1 sources, 0 changed
   r15 = ed87ed5ee42a55f1a903a64d12fd11038b06fa97 (refs/remotes/git-svn)
   Checked out HEAD:
