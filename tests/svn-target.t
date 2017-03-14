@@ -2,6 +2,8 @@ Svn external (with --vcs):
 
   $ git init .
   Initialized empty Git repository in /tmp/cramtests-*/svn-target.t/.git/ (glob)
+  $ git svn --version | grep "git-svn version 2.9." || exit 80
+  git-svn version 2.9.* (svn 1.9.*) (glob)
   $ git externals add -b trunk -c svn https://svn.riouxsvn.com/svn-test-repo/trunk test-repo-svn/ test-repo-svn
   Repo:   https://svn.riouxsvn.com/svn-test-repo/trunk
   Branch: trunk
