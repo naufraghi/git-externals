@@ -4,11 +4,11 @@ Svn external (with --vcs):
   Initialized empty Git repository in /tmp/cramtests-*/svn-target-precise.t/.git/ (glob)
   $ git svn --version | grep "git-svn version 1.8." || exit 80
   git-svn version 1.8.* (svn 1.*.*) (glob)
-  $ git externals add -b trunk -c svn https://svn.riouxsvn.com/svn-test-repo/trunk test-repo-svn/ test-repo-svn
+  $ git externals add -b trunk -c svn https://svn.riouxsvn.com/svn-test-repo/trunk ./ test-repo-svn
   Repo:   https://svn.riouxsvn.com/svn-test-repo/trunk
   Branch: trunk
   Ref:    None
-    test-repo-svn/ -> ./test-repo-svn
+    ./ -> ./test-repo-svn
   
   $ git externals update
   externals sanity check passed!
