@@ -250,7 +250,7 @@ def gitext_freeze(externals):
         if 'tag' in refs:
             return
 
-        revision = command('svnversion', '-c')
+        revision = command('svnversion', '-c').strip()
         if "Unversioned" in revision:
             revision = None
         else:
@@ -266,7 +266,8 @@ def gitext_freeze(externals):
                 remote_name = git("config", "branch.%s.remote" % branch_name)
                 revision = git("log", "%s/%s" % (remote_name, branch_name), "-1", "--format=%H")
             info("Freeze {0} at {1}".format(rel_url, revision))
-            git_externals[rel_url]["ref"] = revision
+
+        git_externals[rel_url]["ref"] = revision
 
     foreach_externals_dir(root_path(), get_version, only=externals)
 
