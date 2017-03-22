@@ -254,7 +254,7 @@ def gitext_freeze(externals):
         if "Unversioned" in revision:
             revision = None
         else:
-            revision = revision.split(':')[-1]  # 565:56555 -> 56555
+            revision = "svn:r" + revision.split(':')[-1]  # 565:56555 -> svn:r56555
 
         if revision is None:
             message = git("log", "--grep", "git-svn-id:", "-1")
