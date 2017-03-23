@@ -24,8 +24,7 @@ from .utils import (chdir, mkdir_p, link, rm_link, git, GitError, svn, gitsvn, g
 from .cli import echo, info, error
 
 
-OLD_EXTERNALS_ROOT = os.path.join('.git', 'externals')
-EXTERNALS_ROOT = '.git_externals'
+EXTERNALS_ROOT = os.path.join('.git', 'externals')
 EXTERNALS_JSON = 'git_externals.json'
 
 ExtItem = namedtuple('ExtItem', ['branch', 'ref', 'path', 'name'])
@@ -53,14 +52,7 @@ def externals_json_path(pwd=None):
 
 
 def externals_root_path(pwd=None):
-    _old_root_path = os.path.join(pwd or root_path(), OLD_EXTERNALS_ROOT)
-    _root_path = os.path.join(pwd or root_path(), EXTERNALS_ROOT)
-    if os.path.exists(_old_root_path) and not os.path.exists(_root_path):
-        info("Moving old externals path to new location")
-        os.rename(_old_root_path, _root_path)
-    elif os.path.exists(_old_root_path) and os.path.exists(_root_path):
-        error("Both new and old externals folder found, {} will be used".format(_root_path))
-    return _root_path
+    return os.path.join(pwd or root_path(), EXTERNALS_ROOT)
 
 
 def root_path():
